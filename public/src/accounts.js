@@ -1,3 +1,14 @@
+//helper functions
+const getAuthorById = (authors, id) => {
+  return authors.find((author) => author.id === id);
+};
+
+const getBooksByAuthorId = (books, authorId) => {
+  return books.filter((book) => book.authorId === authorId);
+};
+//
+//
+
 function findAccountById(accounts, id) {
   let foundAccount = accounts.find((account) => account.id === id);
   return foundAccount;
