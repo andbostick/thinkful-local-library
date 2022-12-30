@@ -1,28 +1,17 @@
-//helper functions
-const getAuthorById = (authors, id) => {
-  return authors.find((author) => author.id === id);
-};
-
-const getBooksByAuthorId = (books, authorId) => {
-  return books.filter((book) => book.authorId === authorId);
-};
-//
-//
-
 function findAccountById(accounts, id) {
-  let foundAccount = accounts.find((account) => account.id === id);
+  const foundAccount = accounts.find((account) => account.id === id);
   return foundAccount;
 }
 
 function sortAccountsByLastName(accounts) {
-  let sortedAccount = accounts.sort((accountA, accountB) =>
+  const sortedAccount = accounts.sort((accountA, accountB) =>
     accountA.name.last.toLowerCase() > accountB.name.last.toLowerCase() ? 1 : -1
   );
   return sortedAccount;
 }
 
 function getTotalNumberOfBorrows(account, books) {
-  let borrower = account.id;
+  const borrower = account.id;
   let borrowerCount = 0;
 
   for (book in books) {
@@ -37,26 +26,30 @@ function getTotalNumberOfBorrows(account, books) {
 }
 
 function getBooksPossessedByAccount(account, books, authors) {
-  const borrower = account.id
-  
-    let result = [];
-    
-    result = books.filter((book) => {
-      return book.borrows.some((borrow) => borrow.id === borrower && !borrow.returned);
-    })
-    
-    result = result.map((book) => {
-      const author = getAuthorById(authors, book.authorId);
-      const newBook = {
-        ...book,
-        author,
-      };
-      return newBook;
-    });
-    
-    return result;
-    
-    
+  const borrower = account.id;
+
+  const getAuthorById = (authors, id) => {
+    return authors.find((author) => author.id === id);
+  };
+
+  let result = [];
+
+  result = books.filter((book) => {
+    return book.borrows.some(
+      (borrow) => borrow.id === borrower && !borrow.returned
+    );
+  });
+
+  result = result.map((book) => {
+    const author = getAuthorById(authors, book.authorId);
+    const newBook = {
+      ...book,
+      author,
+    };
+    return newBook;
+  });
+
+  return result;
 }
 
 module.exports = {
